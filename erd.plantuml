@@ -1,0 +1,95 @@
+@startuml
+
+entity Customer {
+    + customer_id : int
+    ---
+    name : string
+    email : string
+    phone : string
+    address : string
+}
+
+entity Order {
+    + order_id : int
+    ---
+    order_date : datetime
+    status : string
+    total_amount : float
+    customer_id : int
+    employee_id : int
+}
+
+entity OrderItem {
+    + order_item_id : int
+    ---
+    quantity : int
+    price : float
+    order_id : int
+    menu_item_id : int
+}
+
+entity MenuItem {
+    + menu_item_id : int
+    ---
+    name : string
+    description : string
+    price : float
+}
+
+entity Category {
+    + category_id : int
+    ---
+    name : string
+}
+
+entity MenuItemCategory {
+    + menu_item_id : int
+    + category_id : int
+}
+
+entity Employee {
+    + employee_id : int
+    ---
+    name : string
+    role : string
+    email : string
+    phone : string
+}
+
+entity Payment {
+    + payment_id : int
+    ---
+    amount : float
+    payment_date : datetime
+    payment_method : string
+    order_id : int
+}
+
+entity Table {
+    + table_id : int
+    ---
+    number : int
+    capacity : int
+    location : string
+}
+
+entity Reservation {
+    + reservation_id : int
+    ---
+    reservation_date : datetime
+    customer_id : int
+    table_id : int
+}
+
+Customer ||--o{ Order : places
+Order ||--o{ OrderItem : contains
+OrderItem }o--|| MenuItem : refers to
+Employee ||--o{ Order : handles
+Order ||--|| Payment : is paid by
+Table ||--o{ Reservation : has
+Customer ||--o{ Reservation : makes
+
+MenuItem ||--o{ MenuItemCategory
+Category ||--o{ MenuItemCategory
+
+@enduml
